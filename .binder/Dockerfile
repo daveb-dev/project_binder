@@ -19,7 +19,7 @@ EXPOSE 8888/tcp
 
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
-  && apt-get install -y --no-install-recommends \
+  && apt-get install -y   \
     -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew \
     -o Dpkg::Use-Pty=0 \
       locales \
@@ -28,8 +28,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && rm -rf /var/lib/apt/lists/* \
   && locale-gen en_US.UTF-8
 
-# Install common C++ libraries for experimenting. These are not necessary to
-# use pygccxml itself.
+# Install common C++ libraries 
+
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -37,6 +37,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     -o Dpkg::Use-Pty=0 \
       libeigen3-dev \
       libstdc++-7-dev \
+      pybind11-dev python3-pybind11 \ 
   && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -d "/home/$NB_USER" -G $NB_GID -mU -s /bin/bash "$NB_USER"
@@ -56,11 +57,17 @@ RUN pip3 --no-cache-dir install -U pip
 
 WORKDIR $HOME
 
-RUN mkdir pygccxml
-COPY ["/", "pygccxml/"]
+RUN mkdir fmca/build  && cd fcma/build && \
+    cmake .. 
+    
+
 RUN chown -R $NB_UID:$NB_GID \
-  "$HOME/pygccxml"
+  "$HOME/fmca"
+
+RUN chown -R $NB_UID:$NB_GID \
+  "$HOME"
+
+
 USER "$NB_USER"
-RUN pip3 --no-cache-dir install castxml
-RUN pip3 --no-cache-dir install -e ./pygccxml[examples]
-CMD ["jupyter", "notebook", "--ip", "0.0.0.0", "pygccxml/docs/examples/notebook/example.ipynb"]
+
+CMD ["jupyter", "notebook", "--ip", "0.0.0.0", "fmca/py/FMCA_GP.ipynb"]
