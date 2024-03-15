@@ -33,7 +33,9 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-USER $NB_UID
+
+RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
+    fix-permissions "/home/${NB_USER}"
 
 
 
@@ -41,8 +43,9 @@ USER $NB_UID
 # WARNING: Never upgrade a distribution `pip` on a host system using sudo!
 # We are only doing this for a transient Docker image. For a host system, use a
 # virtualenv to upgrade pip.
-RUN pip3 --no-cache-dir install -U pip
+
 WORKDIR $HOME/myproject
+
 RUN git clone --recursive https://github.com/daveb-dev/project_binder.git myproject
 
 RUN mkdir myproject/fmca/build  && cd myproject/fmca/build && \
@@ -55,5 +58,3 @@ RUN chown -R $NB_UID:$NB_GID \
 
 RUN chown -R $NB_UID:$NB_GID \
   "myproject"
-RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
-    fix-permissions "/home/${NB_USER}"
