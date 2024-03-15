@@ -55,17 +55,19 @@ ENV HOME="/home/$NB_USER" \
 # virtualenv to upgrade pip.
 RUN pip3 --no-cache-dir install -U pip
 
-WORKDIR $HOME
+RUN git clone https://github.com/daveb-dev/project_binder.git myproject
+WORKDIR $HOME/myproject
 
 RUN mkdir fmca/build  && cd fmca/build && \
     cmake .. 
+
+RUN chown -R $NB_UID:$NB_GID \
+  "$HOME"
     
 
 RUN chown -R $NB_UID:$NB_GID \
   "$HOME/fmca"
 
-RUN chown -R $NB_UID:$NB_GID \
-  "$HOME"
 
 
 USER "$NB_USER"
