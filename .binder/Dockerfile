@@ -9,46 +9,33 @@
 # Docker image:
 # https://mybinder.readthedocs.io/en/latest/using/config_files.html
 
-FROM ubuntu:22.04
+FROM quay.io/jupyter/base-notebook
 
-ARG NB_USER=jovyan
-ARG NB_UID=1000
-ARG NB_GID=100
-EXPOSE 7000/tcp
-EXPOSE 8888/tcp
+USER root
+# Avoid prompts from apt
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN export DEBIAN_FRONTEND=noninteractive \
-  && apt-get update \
-  && apt-get install -y   \
-    -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew \
-    -o Dpkg::Use-Pty=0 \
-      locales \
-      python3-pip \
-      python3-setuptools \
-  && rm -rf /var/lib/apt/lists/* \
-  && locale-gen en_US.UTF-8
+# Update and install basic required packages
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    g++ \
+    make \
+    python3 \
+    python3-pip \
+    python3-venv \
+    libxml2 \
+    libxml2-dev \
+    libeigen3-dev \
+    libstdc++-11-dev  \
+    git cmake \
+    pybind11-dev python3-pybind11 \ 
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install common C++ libraries 
+USER $NB_UID
 
-RUN export DEBIAN_FRONTEND=noninteractive \
-  && apt-get update \
-  && apt-get install -y --no-install-recommends \
-    -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew \
-    -o Dpkg::Use-Pty=0 \
-      libeigen3-dev \
-      libstdc++-11-dev  \
-      git cmake \
-      pybind11-dev python3-pybind11 \ 
-  && rm -rf /var/lib/apt/lists/*
 
-RUN useradd -d "/home/$NB_USER" -G $NB_GID -mU -s /bin/bash "$NB_USER"
-ENV HOME="/home/$NB_USER" \
-  LANG=en_US.UTF-8 \
-  LANGUAGE=en_US.UTF-8 \
-  LC_ALL=en_US.UTF-8 \
-  SHELL=/bin/bash \
-  USER="$NB_USER" \
-  PATH="/home/$NB_USER/.local/bin:/usr/local/bin:/usr/bin:/bin"
 
 # Upgrade pip to use newer indices for castxml.
 # WARNING: Never upgrade a distribution `pip` on a host system using sudo!
@@ -67,9 +54,5 @@ RUN chown -R $NB_UID:$NB_GID \
 
 RUN chown -R $NB_UID:$NB_GID \
   "myproject"
-
-
-
-USER "$NB_USER"
-
-CMD ["jupyter", "notebook", "--ip", "0.0.0.0"]
+RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
+    fix-permissions "/home/${NB_USER}"
