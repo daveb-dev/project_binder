@@ -66,10 +66,10 @@ RUN chown -R $NB_UID:$NB_GID \
     
 
 RUN chown -R $NB_UID:$NB_GID \
-  "$HOME/fmca"
+  "myproject"
 
 
 
 USER "$NB_USER"
 
-CMD ["jupyter", "notebook", "--ip", "0.0.0.0", "fmca/py/FMCA_GP.ipynb"]
+CMD ["jupyter", "notebook", "--ip", "0.0.0.0", "myproject/fmca/py/FMCA_GP.ipynb"]
