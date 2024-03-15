@@ -57,7 +57,7 @@ RUN pip3 --no-cache-dir install -U pip
 
 WORKDIR $HOME
 
-RUN mkdir fmca/build  && cd fcma/build && \
+RUN mkdir fmca/build  && cd fmca/build && \
     cmake .. 
     
 
