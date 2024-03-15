@@ -46,7 +46,8 @@ WORKDIR $HOME/myproject
 RUN git clone --recursive https://github.com/daveb-dev/project_binder.git myproject
 
 RUN mkdir myproject/fmca/build  && cd myproject/fmca/build && \
-    cmake .. 
+    cmake ..  && \
+    make
 
 RUN chown -R $NB_UID:$NB_GID \
   "$HOME"
