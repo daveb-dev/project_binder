@@ -36,7 +36,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew \
     -o Dpkg::Use-Pty=0 \
       libeigen3-dev \
-      libstdc++-7-dev \
+      libstdc++-7-dev  \
+      git cmake \
       pybind11-dev python3-pybind11 \ 
   && rm -rf /var/lib/apt/lists/*
 
