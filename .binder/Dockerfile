@@ -29,11 +29,11 @@ RUN apt-get update && apt-get install -y \
     libeigen3-dev \
     libstdc++-11-dev  \
     git cmake \
-    pybind11-dev python3-pybind11 \ 
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-
+    
+#    pybind11-dev python3-pybind11 \ 
+RUN pip install pybind11 
 RUN fix-permissions "/home/${NB_USER}"
 
 
