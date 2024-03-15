@@ -56,7 +56,7 @@ ENV HOME="/home/$NB_USER" \
 # virtualenv to upgrade pip.
 RUN pip3 --no-cache-dir install -U pip
 
-RUN git clone https://github.com/daveb-dev/project_binder.git myproject
+RUN git clone --recursive https://github.com/daveb-dev/project_binder.git myproject
 WORKDIR $HOME/myproject
 
 RUN mkdir fmca/build  && cd fmca/build && \
