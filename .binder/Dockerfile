@@ -55,11 +55,10 @@ ENV HOME="/home/$NB_USER" \
 # We are only doing this for a transient Docker image. For a host system, use a
 # virtualenv to upgrade pip.
 RUN pip3 --no-cache-dir install -U pip
-
-RUN git clone --recursive https://github.com/daveb-dev/project_binder.git myproject
 WORKDIR $HOME/myproject
+RUN git clone --recursive https://github.com/daveb-dev/project_binder.git myproject
 
-RUN mkdir fmca/build  && cd fmca/build && \
+RUN mkdir myproject/fmca/build  && cd myproject/fmca/build && \
     cmake .. 
 
 RUN chown -R $NB_UID:$NB_GID \
