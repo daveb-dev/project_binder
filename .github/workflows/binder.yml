@@ -1,7 +1,6 @@
 name: Binder
-on:
-  pull_request:
-    types: [opened, reopened]
+on:  
+  workflow_dispatch
 
 jobs:
   Create-Binder-Badge:
