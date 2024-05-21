@@ -56,7 +56,7 @@ RUN echo "install(TARGETS fmca \n\
         COMPONENT python   \n\
         LIBRARY DESTINATION \"lib/python${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}/site-packages\" \n\
         ARCHIVE DESTINATION \"lib\" \n\
-        RUNTIME DESTINATION \"bin\")" >> fmca/py/CMakeLists.txt
+        RUNTIME DESTINATION \"bin\")" >> myproject/fmca/py/CMakeLists.txt
 RUN mkdir myproject/fmca/build  && cd myproject/fmca/build && \
     cmake ..  && \
     make
