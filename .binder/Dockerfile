@@ -52,7 +52,11 @@ RUN fix-permissions "/home/${NB_USER}"
 WORKDIR $HOME/myproject
 
 RUN git clone --recursive https://github.com/daveb-dev/project_binder.git myproject
-
+RUN echo "install(TARGETS mylib \nthis
+        COMPONENT python   \nthis
+        LIBRARY DESTINATION "lib/python${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}/site-packages" \nthis
+        ARCHIVE DESTINATION "lib" \nthis
+        RUNTIME DESTINATION "bin")" >> fmca/py/CMakeLists.txt 
 RUN mkdir myproject/fmca/build  && cd myproject/fmca/build && \
     cmake ..  && \
     make
