@@ -61,7 +61,6 @@ RUN echo "install(TARGETS FMCA" >> myproject/fmca/py/CMakeLists.txt && \
 RUN cat myproject/fmca/py/CMakeLists.txt
 RUN mkdir myproject/fmca/build  && cd myproject/fmca/build && \
     cmake ..  && \
-    cat "/home/jovyan/myproject/myproject/fmca/build/CMakeFiles/CMakeOutput.log" && \
     make
 
 RUN chown -R $NB_UID:$NB_GID \
