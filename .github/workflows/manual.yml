@@ -1,4 +1,4 @@
-#./github/workflows/chatops-binder.yaml
+#./github/workflows/manual.yaml
 name: trigger Binder
 on: [issue_comment] # issues and PRs are equivalent in terms of comments for the GitHub API
   workflow_dispatch
