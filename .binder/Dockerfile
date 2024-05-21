@@ -54,13 +54,12 @@ WORKDIR $HOME/myproject
 RUN git clone --recursive https://github.com/daveb-dev/project_binder.git myproject
 RUN echo "install(TARGETS FMCA" >> myproject/fmca/py/CMakeLists.txt && \
     echo  "COMPONENT python" >> myproject/fmca/py/CMakeLists.txt && \
-    echo  "LIBRARY DESTINATION \"lib/python\${Python3_VERSION_MAJOR}.\${Python3_VERSION_MINOR}/site-packages\"" >>myproject/fmca/py/CMakeLists.txt && \
-     echo "ARCHIVE DESTINATION \"lib\""  >> myproject/fmca/py/CMakeLists.txt && \
-     echo "RUNTIME DESTINATION \"bin\")" >> myproject/fmca/py/CMakeLists.txt 
+    echo  "LIBRARY DESTINATION \"${PYTHON_LIBRARY_DIR}\")" >>myproject/fmca/py/CMakeLists.txt && \
+ 
      
 RUN cat myproject/fmca/py/CMakeLists.txt
 RUN mkdir myproject/fmca/build  && cd myproject/fmca/build && \
-    cmake ..  && \
+    cmake -DPYTHON_LIBRARY_DIR=/opt/conda/lib/python3.11/site-packages -DPYTHON_EXECUTABLE=$(python -c "import sys; print(sys.executable)") ..  && \
     make && \
     make install
 
