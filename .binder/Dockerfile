@@ -52,9 +52,10 @@ RUN fix-permissions "/home/${NB_USER}"
 WORKDIR $HOME/myproject
 
 RUN git clone --recursive https://github.com/daveb-dev/project_binder.git myproject
+RUN echo "Python directory lib ${PYTHON_LIBRARY_DIR}"
 RUN echo "install(TARGETS FMCA" >> myproject/fmca/py/CMakeLists.txt && \
-    echo  "COMPONENT python" >> myproject/fmca/py/CMakeLists.txt && \
-    echo  "LIBRARY DESTINATION \"${PYTHON_LIBRARY_DIR}\")" >>myproject/fmca/py/CMakeLists.txt 
+    echo "    COMPONENT python" >> myproject/fmca/py/CMakeLists.txt && \
+    echo "    LIBRARY DESTINATION \"${PYTHON_LIBRARY_DIR}\")" >> myproject/fmca/py/CMakeLists.txt
  
      
 RUN cat myproject/fmca/py/CMakeLists.txt
