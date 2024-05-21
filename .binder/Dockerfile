@@ -52,11 +52,13 @@ RUN fix-permissions "/home/${NB_USER}"
 WORKDIR $HOME/myproject
 
 RUN git clone --recursive https://github.com/daveb-dev/project_binder.git myproject
-RUN echo "install(TARGETS FMCA \n\
-    COMPONENT python \n\
-    LIBRARY DESTINATION \"lib/python\${Python3_VERSION_MAJOR}.\${Python3_VERSION_MINOR}/site-packages\" \n\
-    ARCHIVE DESTINATION \"lib\" \n\
-    RUNTIME DESTINATION \"bin\")" >> myproject/fmca/py/CMakeLists.txt
+RUN echo "install(TARGETS FMCA" >> myproject/fmca/py/CMakeLists.txt && \
+    echo  "COMPONENT python" >> myproject/fmca/py/CMakeLists.txt && \
+    echo  "LIBRARY DESTINATION \"lib/python\${Python3_VERSION_MAJOR}.\${Python3_VERSION_MINOR}/site-packages\"" >>myproject/fmca/py/CMakeLists.txt && \
+     echo "ARCHIVE DESTINATION \"lib\""  >> myproject/fmca/py/CMakeLists.txt && \
+     echo "RUNTIME DESTINATION \"bin\")" >> myproject/fmca/py/CMakeLists.txt 
+     
+RUN cat myproject/fmca/py/CMakeLists.txt
 RUN mkdir myproject/fmca/build  && cd myproject/fmca/build && \
     cmake ..  && \
     cat "/home/jovyan/myproject/myproject/fmca/build/CMakeFiles/CMakeOutput.log" && \
