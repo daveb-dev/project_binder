@@ -52,7 +52,7 @@ RUN fix-permissions "/home/${NB_USER}"
 WORKDIR $HOME/myproject
 
 RUN git clone --recursive https://github.com/daveb-dev/project_binder.git myproject
-RUN echo "install(TARGETS fmca \n\
+RUN echo "install(TARGETS FMCA \n\
         COMPONENT python   \n\
         LIBRARY DESTINATION \"lib/python${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}/site-packages\" \n\
         ARCHIVE DESTINATION \"lib\" \n\
