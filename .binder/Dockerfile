@@ -61,7 +61,8 @@ RUN echo "install(TARGETS FMCA" >> myproject/fmca/py/CMakeLists.txt && \
 RUN cat myproject/fmca/py/CMakeLists.txt
 RUN mkdir myproject/fmca/build  && cd myproject/fmca/build && \
     cmake ..  && \
-    make
+    make && \
+    make install
 
 RUN chown -R $NB_UID:$NB_GID \
   "$HOME"
