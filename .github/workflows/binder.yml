@@ -2,6 +2,9 @@ name: Binder
 on:  
   pull_request:
     types: [opened, reopened]
+  workflow_dispatch:
+  
+
 jobs:
   Create-Binder-Badge:
     runs-on: ubuntu-latest
