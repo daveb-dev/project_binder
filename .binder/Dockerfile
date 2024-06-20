@@ -37,7 +37,7 @@ RUN pip install pybind11
 RUN cd /tmp &&  git clone  https://github.com/pybind/pybind11.git   &&\
  	cd /tmp/pybind11 &&  mkdir build && cd build &&\
      cmake -DPYBIND11_FINDPYTHON=ON -DPYTHON_EXECUTABLE=$(python -c "import sys; print(sys.executable)")  ..  &&\
-     make -j &&\
+     make  &&\
      make install  &&\
      rm -r /tmp/pybind11 
 RUN fix-permissions "/home/${NB_USER}"
@@ -65,7 +65,7 @@ RUN echo "install(TARGETS FMCA" >> myproject/fmca/py/CMakeLists.txt && \
 RUN cat myproject/fmca/py/CMakeLists.txt
 RUN mkdir myproject/fmca/build  && cd myproject/fmca/build && \
     cmake -DPYTHON_LIBRARY_DIR=/opt/conda/lib/python3.11/site-packages -DPYTHON_EXECUTABLE=$(python -c "import sys; print(sys.executable)") ..  && \
-    make -j && \
+    make && \
     make install
 
 RUN chown -R $NB_UID:$NB_GID \
