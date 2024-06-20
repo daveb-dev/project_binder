@@ -36,7 +36,7 @@ RUN apt-get update && apt-get install -y \
 RUN pip install pybind11 
 RUN cd /tmp &&  git clone  https://github.com/pybind/pybind11.git   &&\
  	cd /tmp/pybind11 &&  mkdir build && cd build &&\
-     cmake -DPYBIND11_FINDPYTHON=ON -DPYTHON_EXECUTABLE=$(python -c "import sys; print(sys.executable)") -DDOWNLOAD_CATCH=ON ..  &&\
+     cmake -DPYBIND11_FINDPYTHON=ON -DPYTHON_EXECUTABLE=$(python -c "import sys; print(sys.executable)")  ..  &&\
      make -j &&\
      make install  &&\
      rm -r /tmp/pybind11 
