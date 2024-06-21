@@ -29,12 +29,9 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GPAT }} # secrets.GITHUB_TOKEN  GPAT
+          password: ${{ secrets.GITHUB_TOKEN }} # secrets.GITHUB_TOKEN  GPAT
 
-      - name: 'Login to GitHub Container Registry'
-        run: |
-          echo $GPAT | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          
+     
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
