@@ -14,3 +14,6 @@ FROM ghcr.io/daveb-dev/project_binder:main
 
 WORKDIR $HOME/myproject
 
+RUN jupyter lab build
+ENTRYPOINT ["jupyter", "lab", "--ip", "0.0.0.0", "--no-browser", "--allow-root"]
+
