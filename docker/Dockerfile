@@ -10,7 +10,9 @@
 # https://mybinder.readthedocs.io/en/latest/using/config_files.html
 
 FROM quay.io/jupyter/base-notebook
-
+LABEL org.opencontainers.image.source=https://github.com/daveb-dev/project_binder
+LABEL org.opencontainers.image.description="GP environment"
+LABEL org.opencontainers.image.licenses=MIT
 USER root
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
