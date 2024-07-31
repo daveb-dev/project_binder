@@ -55,7 +55,7 @@ WORKDIR $HOME/myproject
 
 RUN git clone --recursive https://github.com/daveb-dev/project_binder.git myproject
 RUN cd myproject/fmca  && \
-    git fetch  && \
+    git pull origin master && \
     cd ..
     
 RUN echo "Python directory lib ${PYTHON_LIBRARY_DIR}"
