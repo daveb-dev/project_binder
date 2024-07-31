@@ -61,7 +61,9 @@ RUN cd myproject/fmca  && \
 RUN echo "Python directory lib ${PYTHON_LIBRARY_DIR}"
 RUN echo "install(TARGETS FMCA" >> myproject/fmca/py/CMakeLists.txt && \
     echo "    COMPONENT python" >> myproject/fmca/py/CMakeLists.txt && \
-    echo '    LIBRARY DESTINATION ${PYTHON_LIBRARY_DIR})' >> myproject/fmca/py/CMakeLists.txt
+    echo '    LIBRARY DESTINATION ${PYTHON_LIBRARY_DIR})' >> myproject/fmca/py/CMakeLists.txt && \
+    sed -i 's/add_subdirectory(tests)/#add_subdirectory(tests)/g' myproject/fmca/CMakeLists.txt
+ 
  
      
 RUN cat myproject/fmca/py/CMakeLists.txt
