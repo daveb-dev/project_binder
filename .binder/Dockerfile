@@ -72,6 +72,8 @@ RUN mkdir myproject/fmca/build  && cd myproject/fmca/build && \
     make && \
     make install
 
+RUN pip install numpy matplotlib 
+
 RUN chown -R $NB_UID:$NB_GID \
   "$HOME"
     
